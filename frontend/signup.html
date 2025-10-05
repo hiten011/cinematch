@@ -87,7 +87,7 @@
             <div class="signup-button">
                 <!--if sign up fails show error message-->
                 <span v-show="signupFailed" id="fail-signup">{{ message }}</span>
-                <button type="submit" @click="signup()" :disabled="!isSignupValid">Sign up</button>
+                <button type="submit" @click="signup()">Sign up</button>
                 <!--path to login to redirect to login-->
                 <span>Have an account already? <a href="/login">Login here</a></span>
             </div>
