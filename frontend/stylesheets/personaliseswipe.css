@@ -559,3 +559,111 @@ main {
     font-style: italic;
     margin-top: -3rem;
 }
+
+/* ─── Tablet (769px – 1024px) ─── */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .side-box {
+        width: 32%;
+    }
+
+    .middle-box-section {
+        width: 30%;
+    }
+
+    .action-buttons {
+        width: 35%;
+    }
+}
+
+/* ─── Mobile (≤ 768px) ─── */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0.5rem 0 0.5rem;
+        min-height: 0;
+        gap: 0;
+    }
+
+    /* Reorder: middle card first, then left info, then right info */
+    .middle-box-section {
+        order: 1;
+        width: 80vw;
+        max-width: 30rem;
+        position: relative;
+        height: 50vw;
+        max-height: 42rem;
+    }
+
+    .side-box:first-child {
+        order: 2;
+        width: 100%;
+    }
+
+    .side-box:last-child {
+        order: 3;
+        width: 100%;
+    }
+
+    .box {
+        height: auto;
+        min-height: 0;
+    }
+
+    .side-box > section {
+        border-radius: 0;
+        border-width: 0.2rem;
+        padding: 0.75rem 1rem;
+        gap: 0.75rem;
+        height: auto;
+    }
+
+    .left-box {
+        border-radius: 0 0 1rem 1rem;
+        border-width: 0 0.2rem 0.2rem 0.2rem;
+        box-shadow: none;
+    }
+
+    .right-box {
+        border-radius: 1rem 1rem 0 0;
+        border-width: 0.2rem 0.2rem 0 0.2rem;
+        box-shadow: none;
+    }
+
+    .heading > span {
+        font-size: 1.6rem;
+    }
+
+    .description {
+        max-height: 8rem;
+        overflow-y: auto;
+    }
+
+    .action-buttons {
+        order: 4;
+        width: 60%;
+        margin: 1rem auto 2rem;
+    }
+
+    .tickcross-button {
+        width: 5.5rem;
+        height: 5.5rem;
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .stream-info {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .watch-trailer,
+    .stream-button {
+        width: 47%;
+    }
+
+    .rating-icon-IMDB,
+    .rating-icon-tomato {
+        height: 2.2rem;
+    }
+}

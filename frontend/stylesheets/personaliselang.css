@@ -400,3 +400,47 @@
     margin-right: 1rem;
     transform: scale(1.2);
   }
+
+/* ─── Mobile (≤ 768px) ─── */
+@media (max-width: 768px) {
+    .personalise-main {
+        margin: 0.5rem 0.5rem 3rem 0.5rem;
+    }
+
+    .main-title {
+        font-size: clamp(2rem, 7vw, 3rem);
+        text-shadow: 0.2rem 0.2rem var(--text-shadow);
+    }
+
+    .lang-section {
+        margin: 2rem 0.5rem 0 0.5rem;
+    }
+
+    .lang-title {
+        font-size: clamp(2rem, 6vw, 3rem);
+    }
+
+    .language-select-wrapper {
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .chip-list {
+        gap: 0.8rem;
+    }
+
+    .chip {
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .next-btn, .back-btn {
+        font-size: 1.3rem;
+        padding: 0.7rem 2rem;
+        min-height: 44px;
+    }
+
+    .next-backbtn-styling {
+        gap: 2rem;
+    }
+}

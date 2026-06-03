@@ -722,3 +722,153 @@ button.confirm:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* ─── Tablet (769px – 1024px) ─── */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .page-layout {
+        padding: 3rem 2rem;
+    }
+
+    .container {
+        max-width: 80%;
+    }
+
+    .row {
+        gap: 2rem;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+}
+
+/* ─── Mobile (≤ 768px) ─── */
+@media (max-width: 768px) {
+    .page-layout {
+        flex-direction: column;
+        padding: 1rem;
+        padding-bottom: 8rem;
+        align-items: stretch;
+    }
+
+    /* Fixed sidebar → fixed bottom tab bar */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: auto;
+        transform: none;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        border-radius: 1.5rem 1.5rem 0 0;
+        padding: 0.7rem 1rem;
+        gap: 0;
+        width: 100%;
+        box-sizing: border-box;
+        z-index: 100;
+        box-shadow: 0 -0.3rem 1rem rgba(0, 0, 0, 0.2);
+    }
+
+    .logout {
+        margin-top: 0;
+    }
+
+    .icon-img {
+        width: 2.8rem;
+        height: 2.8rem;
+        min-width: 44px;
+        min-height: 44px;
+        background-size: 2.2rem;
+    }
+
+    .esc {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: 1.5rem;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .esc > p {
+        margin: 0;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        margin: 0;
+    }
+
+    h1 {
+        font-size: clamp(2.5rem, 7vw, 3.5rem);
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .upload-avatar {
+        flex-direction: column;
+        gap: 3rem;
+        margin-top: 3rem;
+    }
+
+    .preferences {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .dropdown {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .select-avatar {
+        gap: 2rem;
+    }
+
+    .av-row {
+        gap: 1rem;
+    }
+
+    .slot {
+        width: 5.5rem;
+        height: 5.5rem;
+    }
+
+    .slot.large {
+        width: 8rem;
+        height: 8rem;
+    }
+
+    .slot.selected {
+        width: 12rem;
+        height: 12rem;
+    }
+
+    .preview-av {
+        width: 12rem;
+        height: 12rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .container {
+        padding: 1rem;
+    }
+}

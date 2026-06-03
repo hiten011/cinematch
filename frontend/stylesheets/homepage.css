@@ -335,4 +335,197 @@ button:hover{
   pointer-events: none;
 }
 
+/* ─── Tablet (769px – 1024px) ─── */
+@media (max-width: 1024px) and (min-width: 769px) {
+    main {
+        margin: 3rem 2rem 15rem 2rem;
+        padding: 0 1rem;
+    }
+
+    .banner {
+        height: auto;
+        min-height: 16rem;
+        padding: 2rem;
+    }
+
+    .text-content h1 {
+        font-size: 2.8rem;
+        letter-spacing: 0.3rem;
+    }
+
+    .highlight-images img {
+        height: 4rem;
+    }
+
+    .start-button {
+        margin: 0 0 2rem 6rem;
+        font-size: 1.3rem;
+    }
+
+    .characters img {
+        height: 110%;
+    }
+
+    main .heading1 {
+        font-size: 4rem;
+    }
+
+    .boxes {
+        height: 22rem;
+    }
+
+    .boxes img {
+        height: 15rem;
+    }
+
+    .boxes div {
+        width: 10rem;
+    }
+
+    .search-container {
+        width: 12rem;
+    }
+}
+
+/* ─── Mobile (≤ 768px) ─── */
+@media (max-width: 768px) {
+    main {
+        margin: 2rem 1rem 8rem 1rem;
+        padding: 0;
+    }
+
+    /* Banner */
+    .banner {
+        flex-direction: column;
+        height: auto;
+        min-height: 0;
+        padding: 1.5rem;
+        align-items: flex-start;
+    }
+
+    .text-content {
+        margin-top: 0;
+        z-index: 1;
+    }
+
+    .text-content h1 {
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
+        letter-spacing: 0.2rem;
+        line-height: 1.4;
+    }
+
+    .highlight-images img {
+        height: 3rem;
+    }
+
+    .start-button {
+        margin: 1rem 0 1rem 0;
+        display: inline-block;
+        font-size: 1.3rem;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .characters {
+        display: none;
+    }
+
+    /* Section headings */
+    main .heading1 {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+    }
+
+    main .heading2 {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        text-align: center;
+    }
+
+    main .heading3 {
+        font-size: clamp(1rem, 3vw, 1.4rem);
+        text-align: center;
+    }
+
+    /* Heading row with toggle + search */
+    .heading-div {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin: 0 0.5rem;
+    }
+
+    .search-container {
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 0.5rem;
+    }
+
+    .switch {
+        width: 13rem;
+        margin-top: 0.5rem;
+    }
+
+    /* Movie boxes */
+    .boxes {
+        height: auto;
+        min-height: 20rem;
+        border-width: 0.6rem;
+        border-radius: 1.2rem;
+        padding: 0.5rem 0;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 0.5rem;
+        scrollbar-width: thin;
+    }
+
+    .boxes div {
+        width: 10rem;
+        flex-shrink: 0;
+    }
+
+    .boxes img {
+        height: 14rem;
+        width: 100%;
+    }
+
+    .boxes button {
+        width: 3.5rem;
+        height: 3.5rem;
+        flex-shrink: 0;
+        align-self: center;
+    }
+
+    .boxes span {
+        font-size: 1.1rem;
+    }
+
+    /* Middle section */
+    .middle-section {
+        margin: 2rem 0;
+        padding: 0 1rem;
+        text-align: center;
+    }
+
+    /* Search results dropdown */
+    .search-results {
+        width: calc(100vw - 4rem);
+        margin-left: 0;
+        box-sizing: border-box;
+    }
+
+    .poster-personalise-page {
+        margin-top: 1rem;
+    }
+}
+
+/* ─── Very small (≤ 400px) ─── */
+@media (max-width: 400px) {
+    .boxes div {
+        width: 8rem;
+    }
+
+    .boxes img {
+        height: 11rem;
+    }
+}
+
 

@@ -40,6 +40,7 @@ createApp({
         return {
             isLogin: false,
             showMenu: false,
+            showMobileMenu: false,
             isDark: true,
             inProcess: true,
             userName: "guest",
@@ -73,6 +74,9 @@ createApp({
         onMenu() {
             this.showMenu = !this.showMenu;
         },
+        toggleMobileMenu() {
+            this.showMobileMenu = !this.showMobileMenu;
+        },
         changeDark() {
             this.isDark = !this.isDark;
             document.cookie = `theme=${this.isDark ? 'dark' : 'light'}; path=/; max-age=31536000`;
@@ -102,6 +106,10 @@ createApp({
             const profile = document.getElementById('profile');
             if (this.showMenu && profile && !profile.contains(e.target)) {
                 this.showMenu = false;
+            }
+            const navBar = document.getElementById('nav-bar');
+            if (this.showMobileMenu && navBar && !navBar.contains(e.target)) {
+                this.showMobileMenu = false;
             }
         }
     },

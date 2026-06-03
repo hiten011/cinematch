@@ -109,3 +109,29 @@ footer {
 .footer-button-padding {
     margin-top: 0.4rem;
 }
+
+/* ─── Mobile (≤ 768px) ─── */
+@media (max-width: 768px) {
+    .footer-floating-content {
+        margin-bottom: 6rem;
+    }
+
+    .footer-floating-content p {
+        font-size: 1.5rem;
+        line-height: 2.5rem;
+    }
+
+    .footer-content {
+        font-size: 1.5rem;
+    }
+
+    .footer-back-to-top {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .footer-arrow-icon {
+        width: 5rem;
+        height: 5rem;
+    }
+}

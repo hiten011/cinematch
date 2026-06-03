@@ -42,7 +42,7 @@
             <div class="primary-bg-color-nav-bar"><a class="secondary-color-nav-bar">CINEMATCH</a></div>
         </div>
 
-        <div class="nav secondary-bg-color-nav-bar">
+        <div class="nav secondary-bg-color-nav-bar" :class="{ open: showMobileMenu }">
             <a class="primary-color-nav-bar" href="/home">HOME</a>
             <a class="primary-color-nav-bar underline-nav-bar" href="/personalise">PERSONALISE</a>
             <a class="primary-color-nav-bar" href="/mylists">MY LISTS</a>
@@ -50,6 +50,9 @@
         </div>
 
         <div class="login-nav-bar secondary-bg-color-nav-bar">
+            <button class="hamburger-btn" :class="{ 'is-open': showMobileMenu }" @click="toggleMobileMenu()" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
             <div class="primary-bg-color-nav-bar" id="profile">
                 <!-- if not login -->
                 <a v-if="!isLogin && !inProcess" href="/login"

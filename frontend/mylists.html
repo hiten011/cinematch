@@ -45,7 +45,7 @@
             <div class="primary-bg-color-nav-bar"><a class="secondary-color-nav-bar">CINEMATCH</a></div>
         </div>
 
-        <div class="nav secondary-bg-color-nav-bar">
+        <div class="nav secondary-bg-color-nav-bar" :class="{ open: showMobileMenu }">
             <a class="primary-color-nav-bar" href="/home">HOME</a>
             <a class="primary-color-nav-bar" href="/personalise">PERSONALISE</a>
             <a class="primary-color-nav-bar  underline-nav-bar" href="/mylists">MY LISTS</a>
@@ -53,6 +53,9 @@
         </div>
 
         <div class="login-nav-bar secondary-bg-color-nav-bar">
+            <button class="hamburger-btn" :class="{ 'is-open': showMobileMenu }" @click="toggleMobileMenu()" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
             <div class="primary-bg-color-nav-bar" id="profile">
                 <!-- if not login -->
                 <a v-if="!isLogin && !inProcess" href="/login"
@@ -214,7 +217,7 @@
                     </tr>
 
                     <tr v-for="movie in movies">
-                        <td class="movie-title movie-name">
+                        <td class="movie-title movie-name" data-label="Name">
                             <div class="title-with-icon"> <img class="bookmark-icon"
                                     :src="movie.watch_status === 1 || movie.watch_status === 0  ? '/images/my-lists/unbookmarked.svg' : '/images/my-lists/bookmarked.svg'"
                                     alt="Bookmark" @click.stop="toggleBookmark(movie)" />
@@ -222,7 +225,7 @@
 
                             </div>
                         </td>
-                        <td>
+                        <td data-label="Genre">
                             <div class="genre-cell">
                                 <span v-for="g in movie.genres"
                                     :class="['genre-badge', 'genre-' + g.name.toLowerCase().replace(/\s+/g, '-')]">
@@ -230,12 +233,12 @@
                                 </span>
                             </div>
                         </td>
-                        <td class="release-date">{{ helperMovieDate(movie.release_date) }}</td>
-                        <td><img :src="helperMovieStatus(movie.watch_status)" :alt="movie.watch_status"
+                        <td class="release-date" data-label="Release Date">{{ helperMovieDate(movie.release_date) }}</td>
+                        <td data-label="Status"><img :src="helperMovieStatus(movie.watch_status)" :alt="movie.watch_status"
                                 class="status-icon" @click="toggleStatus(movie)"></td>
-                        <td class="age-rating">{{ helperCheckEmpty(movie.certification) }}</td>
-                        <td class="imdb-rating">{{ helperImdbRating(movie.imdb_rating) }}</td>
-                        <td class="rating-cell">
+                        <td class="age-rating" data-label="Age Rating">{{ helperCheckEmpty(movie.certification) }}</td>
+                        <td class="imdb-rating" data-label="IMDb Rating">{{ helperImdbRating(movie.imdb_rating) }}</td>
+                        <td class="rating-cell" data-label="Your Rating">
                             <div class="star-rating" @mouseleave="movie.hoverRating = 0">
                                 <template v-for="i in 5">
                                     <div class="star-container"
