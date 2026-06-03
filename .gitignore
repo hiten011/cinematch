@@ -83,6 +83,9 @@ backend/.env
 .nuxt
 dist
 
+# Allow frontend-react dist (needed to serve the SPA)
+!frontend-react/dist
+
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and *not* Next.js

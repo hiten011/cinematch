@@ -21,6 +21,19 @@ const router = express.Router();
 
 router.use(isAuthenticated);
 
+router.get('/has-vector', async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            'SELECT user_vector FROM USERSETTINGS WHERE user_id = ?',
+            [req.user.id]
+        );
+        const hasVector = !!(rows[0] && rows[0].user_vector);
+        return res.status(200).json({ hasVector });
+    } catch (err) {
+        return res.status(500).json({ msg: 'Internal server error' });
+    }
+});
+
 router.post('/createUserVector', async (req, res) => {
     try {
         const userId = req.user.id;

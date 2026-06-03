@@ -71,7 +71,7 @@ app.use(async (req, res, next) => {
     next();
 });
 
-app.use(express.static(path.join(__dirname, '../frontend'), { index: false })); // use /frontend directory as default directory for static files.
+app.use(express.static(path.join(__dirname, '../frontend-react/dist'), { index: false }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // update sessions
@@ -103,6 +103,14 @@ app.use('/api/auth', authRouter);
 app.use('/api/mylist', mylistRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/personalise', personaliseRouter);
+
+// SPA fallback — serve index.html for all non-API, non-static GET requests
+app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) {
+        return next();
+    }
+    res.sendFile(path.join(__dirname, '../frontend-react/dist/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
