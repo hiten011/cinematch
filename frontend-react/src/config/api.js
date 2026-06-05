@@ -15,9 +15,15 @@ export const API = {
   },
 
   USERS: {
-    ME:          `${API_BASE}/users/me`,
-    THEME:       `${API_BASE}/users/me/theme`,
-    UPLOAD_PIC:  `${API_BASE}/users/me/profile-picture`,
+    ME:               `${API_BASE}/users/me`,
+    THEME:            `${API_BASE}/users/me/theme`,
+    UPLOAD_PIC:       `${API_BASE}/users/me/profile-picture`,
+    PROFILE_AVATAR:   `${API_BASE}/users/me/profile-avatar`,
+    LANGUAGES_GENRES: `${API_BASE}/users/languages-genres`,
+  },
+
+  AUTH_EXTRA: {
+    CHANGE_PASSWORD: `${API_BASE}/auth/change-password`,
   },
 
   MOVIES: {

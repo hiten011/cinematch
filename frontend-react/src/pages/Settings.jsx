@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import { API } from '../config/api';
 import { ROUTES } from '../config/routes';
+import { validatePass } from '../utils/validators';
 import '@styles/index.css';
 import '@styles/settings.css';
 
@@ -14,17 +15,6 @@ const AVATARS = [
   { id: 4, src: '/uploads/avatar4.svg' },
   { id: 5, src: '/uploads/avatar5.svg' },
 ];
-
-function validatePass(p) {
-  return {
-    length:    p.length >= 8 && p.length <= 16,
-    uppercase: /[A-Z]/.test(p),
-    lowercase: /[a-z]/.test(p),
-    number:    /[0-9]/.test(p),
-    special:   /[!_@#$%^&*(),?":{}|<>]/.test(p),
-    noSpaces:  !/\s/.test(p) && !p.includes('.') && p.length > 0,
-  };
-}
 
 export default function Settings() {
   const navigate       = useNavigate();
@@ -78,7 +68,7 @@ export default function Settings() {
   useEffect(() => {
     const init = async () => {
       const [prefs, userData] = await Promise.all([
-        axios.get('/api/users/languages-genres').then((r) => r.data).catch(() => ({})),
+        axios.get(API.USERS.LANGUAGES_GENRES).then((r) => r.data).catch(() => ({})),
         axios.get(API.USERS.ME).then((r) => r.data).catch(() => ({})),
       ]);
       const [allGenres, allLangs] = await Promise.all([
@@ -141,7 +131,7 @@ export default function Settings() {
   const changePassword = async () => {
     if (!curPass || !newPass || !confirmPass || !passMatch || curPass === newPass) return;
     try {
-      await axios.post('/api/auth/change-password', { current_password: curPass, new_password: newPass });
+      await axios.post(API.AUTH_EXTRA.CHANGE_PASSWORD, { current_password: curPass, new_password: newPass });
       showPopup('Password changed successfully');
       setCurPass(''); setNewPass(''); setConfirmPass(''); setPassMatch(true); setPassError('');
     } catch (e) {
@@ -213,7 +203,7 @@ export default function Settings() {
     if (isCurrAvSelected()) return;
     const av = AVATARS[currAvIdx];
     setSelectedAv(av);
-    axios.post('/api/users/me/profile-avatar', { id: av.id }).catch(() => {});
+    axios.post(API.USERS.PROFILE_AVATAR, { id: av.id }).catch(() => {});
     showPopup('Avatar updated successfully');
   };
 

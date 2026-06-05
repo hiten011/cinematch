@@ -4,20 +4,10 @@ import axios from 'axios';
 import NavBar from '../components/NavBar';
 import { API } from '../config/api';
 import { ROUTES } from '../config/routes';
+import { validatePass } from '../utils/validators';
 import '@styles/index.css';
 import '@styles/nav-bar.css';
 import '@styles/admin-dash.css';
-
-function validatePass(p) {
-  return {
-    length:    p.length >= 8 && p.length <= 16,
-    uppercase: /[A-Z]/.test(p),
-    lowercase: /[a-z]/.test(p),
-    number:    /[0-9]/.test(p),
-    special:   /[!_@#$%^&*(),?":{}|<>]/.test(p),
-    noSpaces:  !/\s/.test(p) && !p.includes('.') && p.length > 0,
-  };
-}
 
 const blankUser = { user_name: '', first_name: '', last_name: '', password: '', role: 'user', profile_picture_url: '/uploads/avatar3.svg' };
 
@@ -358,7 +348,7 @@ export default function AdminDashboard() {
               <tr><td /><td /><td /><td /><td /><td /></tr>
               {users.map((u) => (
                 <tr key={u.user_name}>
-                  <td>
+                  <td data-label="Username">
                     <div className="checkbox-col">
                       {isSelectOn && (
                         <input type="checkbox" checked={selectedUsers.includes(u.user_id)} onChange={() => selectUser(u.user_id)} disabled={u.role === 'admin'} />
@@ -366,16 +356,16 @@ export default function AdminDashboard() {
                       <span className="username" onClick={() => editUser(u)}>{u.user_name}</span>
                     </div>
                   </td>
-                  <td>{u.first_name}</td>
-                  <td>{u.last_name}</td>
-                  <td>{new Date(u.registration_date).toLocaleDateString('en-GB')}</td>
-                  <td>
+                  <td data-label="First name">{u.first_name}</td>
+                  <td data-label="Last name">{u.last_name}</td>
+                  <td data-label="Date joined">{new Date(u.registration_date).toLocaleDateString('en-GB')}</td>
+                  <td data-label="Role">
                     <span className={`role-pill${u.role === 'admin' ? ' admin' : ' user'}`}>
                       <span className="circle" /> {u.role === 'admin' ? 'Administrator' : 'User'}
                     </span>
                   </td>
-                  <td>{new Date(u.last_login).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false })}</td>
-                  <td><a className="fancy-link" href={u.profile_picture_url} target="_blank" rel="noopener noreferrer">{helperPfp(u.profile_picture_url)}</a></td>
+                  <td data-label="Last active">{new Date(u.last_login).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false })}</td>
+                  <td data-label="Profile pic"><a className="fancy-link" href={u.profile_picture_url} target="_blank" rel="noopener noreferrer">{helperPfp(u.profile_picture_url)}</a></td>
                 </tr>
               ))}
             </tbody>

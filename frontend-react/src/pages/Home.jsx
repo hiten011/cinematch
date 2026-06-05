@@ -34,6 +34,7 @@ function Carousel({ items, color }) {
       <button
         type="button"
         className={color}
+        disabled={!items.length}
         onClick={() => setSi((p) => mod(p - 1, items.length))}
       >
         <svg width="53" height="52"><use xlinkHref="#arrow-left" /></svg>
@@ -52,6 +53,7 @@ function Carousel({ items, color }) {
       <button
         type="button"
         className={color}
+        disabled={!items.length}
         onClick={() => setSi((p) => mod(p + 1, items.length))}
       >
         <svg width="53" height="52"><use xlinkHref="#arrow-right" /></svg>
@@ -88,7 +90,7 @@ export default function Home() {
   }, [isTVShows, fetchAll]);
 
   const searchMovies = async (q) => {
-    if (q.length <= 3) { setShowSearch(false); return; }
+    if (q.length < 3) { setShowSearch(false); return; }
     const url = isTVShows ? API.TV.SEARCH(q) : API.MOVIES.SEARCH(q);
     const res = await axios.get(url).then((r) => r.data).catch(() => []);
     setSearchResults(res);

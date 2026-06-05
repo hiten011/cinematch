@@ -103,6 +103,16 @@ export default function PersonaliseSwipe() {
 
   if (isLoading) return <Spinner />;
 
+  if (!movie) return (
+    <>
+      <NavBar />
+      <div id="personalise" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '80vh', gap: '1rem' }}>
+        <h2 style={{ color: 'var(--text-color)', textAlign: 'center' }}>No more movies to show!</h2>
+        <p style={{ color: 'var(--text-color)', opacity: 0.7, textAlign: 'center' }}>Check back later for new recommendations.</p>
+      </div>
+    </>
+  );
+
   return (
     <>
       <NavBar />

@@ -355,7 +355,7 @@ export default function MyLists() {
             <button type="button" className="page-arrow" disabled={page <= 1} onClick={() => setPage((p) => p - 1)}>←</button>
             {range(1, totalPages).map((n, idx) => (
               <button
-                key={idx}
+                key={`${n}-${idx}`}
                 type="button"
                 disabled={n === '...'}
                 className={`page-number${n === page ? ' active' : ''}${n === '...' ? ' ellipsis' : ''}`}

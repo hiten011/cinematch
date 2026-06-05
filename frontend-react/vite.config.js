@@ -4,8 +4,9 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  // Point public dir to existing frontend/images so /images/... works in dev
-  publicDir: path.resolve(__dirname, '../frontend'),
+  // public/ contains a symlink to ../frontend/images so /images/... works
+  // without copying old HTML/CSS/JS into dist
+  publicDir: path.resolve(__dirname, 'public'),
   build: {
     outDir: 'dist',
     emptyOutDir: true,
