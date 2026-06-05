@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Spinner from '../components/Spinner';
-import { API, API_BASE } from '../config/api';
+import { API } from '../config/api';
 import { ROUTES } from '../config/routes';
 import '@styles/index.css';
 import '@styles/nav-bar.css';
@@ -17,7 +17,9 @@ const mod = (n, m) => ((n % m) + m) % m;
 function Carousel({ items, color }) {
   const [si, setSi] = useState(0);
   const navigate    = useNavigate();
-  const isTVRef     = useRef(null);
+
+  // Reset position when items change (e.g. Movies ↔ TV toggle)
+  useEffect(() => { setSi(0); }, [items]);
 
   const getSlice = () => {
     if (!items.length) return [];

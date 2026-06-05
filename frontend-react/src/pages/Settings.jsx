@@ -246,12 +246,12 @@ export default function Settings() {
     }
   };
 
+  const checkMatch = !newPass || !confirmPass || newPass === confirmPass;
+
   const isChangeNameValid  = newFirst.trim() && newLast.trim() && namePass.trim();
-  const isChangePassValid  = curPass && newPass && confirmPass && passMatch && curPass !== newPass;
+  const isChangePassValid  = curPass && newPass && confirmPass && passMatch && checkMatch && curPass !== newPass;
   const isDeleteAccValid   = delPass.trim() !== '';
   const filterLang = searchLang ? languages.filter((l) => l.name.toLowerCase().includes(searchLang.toLowerCase())) : languages;
-
-  const checkMatch = !newPass || !confirmPass || newPass === confirmPass;
 
   return (
     <div id="settings">

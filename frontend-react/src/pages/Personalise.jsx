@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
 import { API } from '../config/api';
-import { ROUTES } from '../config/routes';
 import '@styles/index.css';
 import '@styles/nav-bar.css';
 import '@styles/footer.css';

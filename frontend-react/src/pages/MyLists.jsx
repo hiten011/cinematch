@@ -82,7 +82,10 @@ export default function MyLists() {
     setTotalPages(Math.ceil(total / load) || 1);
   };
 
-  useEffect(() => { fetchMovies(buildUrl(1)); setPage(1); }, [load, sort, filter]);
+  useEffect(() => {
+    if (page !== 1) { setPage(1); return; }
+    fetchMovies(buildUrl(1));
+  }, [load, sort, filter]);
   useEffect(() => { fetchMovies(buildUrl(page)); }, [page]);
   useEffect(() => {
     axios.get(API.GENRES).then((r) => setGenres(r.data)).catch(() => {});

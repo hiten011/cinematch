@@ -38,7 +38,7 @@ export default function Signup() {
     <main
       className="primary-bg-color-signup"
       id="signup-page"
-      style={{ '--primary-color': '#2D6FAF', '--secondary-color': '#76B9E8', '--text-color': 'white' }}
+      style={{ '--primary-color': '#3B699A', '--secondary-color': '#8EC2FF', '--text-color': 'white' }}
     >
       <div className="signup-img" />
 
