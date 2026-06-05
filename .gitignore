@@ -1,3 +1,7 @@
+# Test/debug artefacts
+.playwright-mcp/
+screenshots/
+
 # Logs
 logs
 *.log
