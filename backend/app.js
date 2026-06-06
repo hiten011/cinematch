@@ -71,7 +71,7 @@ app.use(async (req, res, next) => {
     next();
 });
 
-app.use(express.static(path.join(__dirname, '../frontend-react/dist'), { index: false }));
+app.use(express.static(path.join(__dirname, '../frontend/dist'), { index: false }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // update sessions
@@ -109,7 +109,7 @@ app.get('*', (req, res, next) => {
     if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) {
         return next();
     }
-    res.sendFile(path.join(__dirname, '../frontend-react/dist/index.html'));
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
 // catch 404 and forward to error handler

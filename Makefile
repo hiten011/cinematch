@@ -1,7 +1,7 @@
 
 # variables
 BACKEND_DIR=backend
-FRONTEND_DIR=frontend-react
+FRONTEND_DIR=frontend
 DB_DIR=$(BACKEND_DIR)/db
 
 include $(BACKEND_DIR)/.env
@@ -11,11 +11,10 @@ include $(BACKEND_DIR)/.env
 .PHONY: help
 help:
 	@echo "Usage:"
-	@echo "    make install           Install backend dependencies"
-	@echo "    make frontend-install  Install frontend dependencies"
+	@echo "    make install           Install all dependencies (backend + frontend)"
 	@echo "    make build             Build the React frontend"
-	@echo "    make dev               Start backend with nodemon"
-	@echo "    make start             Start the backend server"
+	@echo "    make dev               Start backend + frontend dev servers concurrently"
+	@echo "    make start             Start the backend server (serves built frontend)"
 	@echo "    make db-start          Start mysql"
 	@echo "    make db-create         Create the database and tables"
 	@echo "    make db-seed           Insert initial seed data"
@@ -25,8 +24,6 @@ help:
 install:
 	@echo " [*] Installing backend dependencies"
 	@cd $(BACKEND_DIR) && npm install
-
-frontend-install:
 	@echo " [*] Installing frontend dependencies"
 	@cd $(FRONTEND_DIR) && npm install
 
@@ -35,12 +32,16 @@ build:
 	@cd $(FRONTEND_DIR) && npm run build
 
 start:
-	@echo ' [*] Starting Prod'
+	@echo ' [*] Starting Prod (backend serves built frontend on :8080)'
 	@cd $(BACKEND_DIR) && npm start
 
 dev:
-	@echo ' [*] Starting Dev'
-	@cd $(BACKEND_DIR) && npm run dev
+	@echo ' [*] Starting Dev (backend :8080 + frontend :5173 with HMR)'
+	@cd $(BACKEND_DIR) && npx concurrently \
+	  --names "backend,frontend" \
+	  --prefix-colors "blue,green" \
+	  "npm run dev" \
+	  "cd ../$(FRONTEND_DIR) && npm run dev"
 
 mysql:
 	@mysql -h $(DB_HOST) -u$(DB_USER) -p$(DB_PASS) $(DB_NAME)
