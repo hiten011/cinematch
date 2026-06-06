@@ -13,7 +13,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@styles': path.resolve(__dirname, '../frontend/stylesheets'),
+      '@styles': path.resolve(__dirname, '../old-frontend/stylesheets'),
       '@': path.resolve(__dirname, 'src'),
     },
   },

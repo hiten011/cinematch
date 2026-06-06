@@ -7,13 +7,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 All commands run from repo root via `make`, which reads `backend/.env` for DB credentials.
 
 ```bash
-make install      # npm install in backend/
-make dev          # nodemon (hot reload)
-make start        # node (production)
-make db-reset     # drop + recreate schema + seed (destructive)
-make db-seed      # seed only
-make db-dump      # dump to backend/db/dump.sql
-make mysql        # open MySQL shell
+make install           # npm install in backend/
+make frontend-install  # npm install in frontend-react/
+make build             # npm run build in frontend-react/ (outputs to frontend-react/dist/)
+make dev               # nodemon (hot reload)
+make start             # node (production)
+make db-reset          # drop + recreate schema + seed (destructive)
+make db-seed           # seed only
+make db-dump           # dump to backend/db/dump.sql
+make mysql             # open MySQL shell
 ```
 
 No test runner is configured. No lint script in package.json — ESLint config exists in `.eslintrc.json` but must be run directly: `cd backend && npx eslint <file>`.
@@ -33,7 +35,7 @@ Dev container is available via `.devcontainer/` for VS Code.
 
 ## Architecture
 
-**Frontend** — static HTML/CSS/Vue.js files in `frontend/`. Served directly by Express (`express.static`). Direct `.html` URL access is blocked by middleware (403); all page navigation must go through Express routes defined in `backend/routes/index.js`. Frontend JS uses ES6 modules.
+**Frontend** — React 18 + Vite SPA in `frontend-react/`. Built output goes to `frontend-react/dist/`, which Express serves as static files (`express.static`). The SPA uses React Router for client-side routing; Express has a `*` fallback that serves `dist/index.html` for all non-API routes. CSS is imported via `@styles` alias (resolves to `old-frontend/stylesheets/` — the original stylesheets, kept for reuse). Images are served from `old-frontend/images/` via a symlink in `frontend-react/public/`. Config lives in `frontend-react/src/config/api.js` (all API endpoints) and `src/config/routes.js` (all routes). Auth state is managed globally via `src/contexts/AuthContext.jsx`. The old Vue.js frontend is preserved in `old-frontend/` for reference.
 
 **Backend** — Express app in `backend/app.js`. All API routes are prefixed `/api/`. Session store uses the same MySQL pool (`express-mysql-session`), persisting to the `SESSIONS` table. Passport.js local strategy handles auth (`services/local-strategy.js`).
 

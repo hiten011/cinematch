@@ -1,7 +1,7 @@
 
 # variables
 BACKEND_DIR=backend
-FRONTEND_DIR=frontend
+FRONTEND_DIR=frontend-react
 DB_DIR=$(BACKEND_DIR)/db
 
 include $(BACKEND_DIR)/.env
@@ -12,6 +12,8 @@ include $(BACKEND_DIR)/.env
 help:
 	@echo "Usage:"
 	@echo "    make install           Install backend dependencies"
+	@echo "    make frontend-install  Install frontend dependencies"
+	@echo "    make build             Build the React frontend"
 	@echo "    make dev               Start backend with nodemon"
 	@echo "    make start             Start the backend server"
 	@echo "    make db-start          Start mysql"
@@ -23,6 +25,14 @@ help:
 install:
 	@echo " [*] Installing backend dependencies"
 	@cd $(BACKEND_DIR) && npm install
+
+frontend-install:
+	@echo " [*] Installing frontend dependencies"
+	@cd $(FRONTEND_DIR) && npm install
+
+build:
+	@echo " [*] Building React frontend"
+	@cd $(FRONTEND_DIR) && npm run build
 
 start:
 	@echo ' [*] Starting Prod'
