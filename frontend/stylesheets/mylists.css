@@ -649,3 +649,158 @@ justify-content: center;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+/* Responsive layout */
+
+@media (max-width: 1024px) {
+  main {
+    margin: 4rem 2rem 12rem 2rem;
+    padding: 0 1rem;
+  }
+
+  .main-mylists {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .hero-section {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .filter-sort-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .filter-button,
+  .button-reset {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    margin: 3rem 1rem 10rem 1rem;
+    padding: 0;
+  }
+
+  .main-mylists {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  .hero-section {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .filter-sort-section {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  /* table scrolls horizontally instead of squashing its columns */
+  .movie-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .movie-table table {
+    min-width: 640px;
+  }
+
+  .movie-table th {
+    font-size: 1.2rem;
+    padding: 0.6rem;
+  }
+
+  .movie-table td {
+    font-size: 1.1rem;
+    padding: 0.6rem;
+  }
+
+  td.movie-title {
+    max-width: 14rem;
+    font-size: 1.2rem;
+  }
+
+  td.release-date,
+  td.age-rating,
+  td.imdb-rating {
+    font-size: 1.1rem;
+    padding: 0.5rem;
+    width: auto;
+  }
+
+  .star-container {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .genre-badge {
+    font-size: 1rem;
+  }
+
+  /* dropdown menus must stay inside the viewport */
+  .filter-menu-accordion {
+    left: auto;
+    right: 1rem;
+    max-width: calc(100vw - 2rem);
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .custom-dropdown-menu {
+    max-width: calc(100vw - 2rem);
+  }
+
+  .table-footer {
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading-text {
+    font-size: 2rem;
+  }
+
+  .filter-button,
+  .button-reset {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .movie-table {
+    padding: 0.6rem;
+  }
+
+  .movie-table table {
+    min-width: 560px;
+  }
+
+  .custom-dropdown .load-button {
+    font-size: 1.2rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .pagination-controls {
+    gap: 0.3rem;
+  }
+
+  .page-number,
+  .page-arrow {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}

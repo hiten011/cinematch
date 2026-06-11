@@ -70,8 +70,14 @@ const app = Vue.createApp({
                 this.isLoading = true;
                 const detailsEndpoint = this.contentType === 'tv' ? '/api/tv/show/' : '/api/movies/movie/';
                 const prefEndpoint = this.contentType === 'tv' ? '/api/tv/user-preferences/' : '/api/movies/user-preferences/';
-                const detailsResponse = await axios.get(detailsEndpoint + movieId);
-                const prefResponse = await axios.get(prefEndpoint + movieId);
+
+                // fetch details and preferences in parallel; preferences fail for
+                // guests (401), which must not block the movie details
+                const [detailsResponse, prefResponse] = await Promise.all([
+                    axios.get(detailsEndpoint + movieId),
+                    axios.get(prefEndpoint + movieId)
+                        .catch(() => ({ data: { user_rating: 0, watch_status: 0 } }))
+                ]);
 
                 this.movie = {
                     ...detailsResponse.data,

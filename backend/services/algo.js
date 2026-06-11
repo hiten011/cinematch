@@ -25,7 +25,8 @@ const [
     getDecadesIndex,
     getImbdRatingIndex,
     getUserRatingIndex,
-    getWatchProvidersIndex
+    getWatchProvidersIndex,
+    mappingReady
 ] = require('./algo-mapping');
 
 /**
@@ -35,6 +36,7 @@ const [
  */
 async function createUserVector(userId) {
     try {
+        await mappingReady; // make sure index mappings are initialised
         const info = await getUserGenresLanguages(userId);
         var vec = new Array(CONFIG.DIMENSIONS).fill(0);
 
@@ -67,6 +69,7 @@ async function createUserVector(userId) {
  */
 async function createMovieVector(userId, id) {
     try {
+        await mappingReady; // make sure index mappings are initialised
         const data = await getMovieData(id);
         const vec = new Array(CONFIG.DIMENSIONS).fill(0);
 
@@ -87,7 +90,7 @@ async function createMovieVector(userId, id) {
         vec[getImbdRatingIndex(data.imdb_rating)] = 1;
 
         // Encode user rating (from local function)
-        const rating = getUserRating(userId, id);
+        const rating = await getUserRating(userId, id);
         vec[getUserRatingIndex(rating)] = 1;
 
         // Encode watch providers
@@ -157,15 +160,16 @@ function l2Norm(vec) {
 }
 
 /**
- * Normalizes a vector
+ * Normalizes a vector (returns a copy, never mutates the input —
+ * the caller's vector is persisted to the DB and must stay un-normalized)
  * @param {number[]} vec
  * @returns {number[]} normalized vector
  */
 function normalize(v) {
-    var vec = v;
-    const norm = l2Norm(vec) + 1e-8;
-    for (let i = 0; i < vec.length; i++) {
-        vec[i] = vec[i] / norm;
+    const norm = l2Norm(v) + 1e-8;
+    const vec = new Array(v.length);
+    for (let i = 0; i < v.length; i++) {
+        vec[i] = v[i] / norm;
     }
     return vec;
 }

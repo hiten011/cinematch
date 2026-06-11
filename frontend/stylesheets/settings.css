@@ -722,3 +722,168 @@ button.confirm:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Responsive layout */
+
+@media (max-width: 1024px) {
+    .container {
+        max-width: 80%;
+    }
+
+    .sidebar {
+        left: 2rem;
+    }
+
+    .esc {
+        left: 2.7rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-layout {
+        flex-direction: column;
+        padding: 5rem 1.5rem 1.5rem 1.5rem;
+    }
+
+    /* sidebar becomes a horizontal bar on top */
+    .sidebar {
+        position: static;
+        transform: none;
+        flex-direction: row;
+        justify-content: center;
+        gap: 2rem;
+        padding: 0.7rem 1.5rem;
+        margin: 0 auto 2rem auto;
+    }
+
+    .logout {
+        margin-top: 0;
+        margin-left: 2rem;
+    }
+
+    .esc {
+        top: 1rem;
+        left: 1rem;
+    }
+
+    .container {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 1.5rem;
+        padding-top: 0;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    /* side-by-side cards stack into one column */
+    .row {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* avatar carousel fits smaller screens */
+    .select-avatar {
+        gap: 3rem;
+    }
+
+    .av-row {
+        gap: 1.5rem;
+    }
+
+    .slot {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .slot.large {
+        width: 8rem;
+        height: 8rem;
+    }
+
+    .slot.selected {
+        width: 12rem;
+        height: 12rem;
+    }
+
+    .upload-avatar {
+        flex-direction: column;
+        gap: 3rem;
+        margin-top: 4rem;
+    }
+
+    /* preference dropdowns go full width */
+    .preferences {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dropdown {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-layout {
+        padding: 4rem 1rem 1rem 1rem;
+    }
+
+    .container {
+        padding: 1rem;
+        padding-top: 0;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .sidebar {
+        gap: 1.2rem;
+    }
+
+    .logout {
+        margin-left: 1rem;
+    }
+
+    .slot {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .slot.large {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    .slot.selected {
+        width: 9rem;
+        height: 9rem;
+    }
+
+    .av-controls {
+        gap: 1.5rem;
+    }
+
+    .select-button, .upload-button {
+        font-size: 1.3rem;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .preview-av {
+        width: 12rem;
+        height: 12rem;
+    }
+}

@@ -236,13 +236,14 @@ const movieTable = Vue.createApp({
         // gets movie data and updates local list
         async getMovieData(url) {
             const res = await helperGetMovieData(url);
+            const data = res.data || {}; // guard against failed requests
 
-            this.movies = (res.data.movies || []).map(movie => ({
+            this.movies = (data.movies || []).map(movie => ({
                 ...movie,
                 hoverRating: 0 // add temporary field for hover effect
             }));
 
-            this.totalMovies = res.data.total || 0;
+            this.totalMovies = data.total || 0;
             this.totalPages = Math.ceil(this.totalMovies / this.load);
             // console.log(this.totalPages);
             // console.log(this.totalMovies);

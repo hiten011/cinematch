@@ -221,3 +221,92 @@ nav a:hover {
 .logout-nav-bar {
     color: #f17878;
 }
+
+/* ---------- Responsive nav ---------- */
+
+@media (max-width: 1024px) {
+    .user-container-nav-bar {
+        margin-right: 1rem;
+    }
+
+    .login-nav-bar>div>a {
+        padding: 0.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-wrap: wrap;
+        height: auto;
+    }
+
+    /* row 1: logo + sign in / profile */
+    .logo-nav-bar,
+    .login-nav-bar {
+        width: 50vw;
+        order: 0;
+    }
+
+    .logo-nav-bar>div {
+        border-radius: 0 0 2.5rem 0;
+    }
+
+    .login-nav-bar>div {
+        width: 100%;
+        border-radius: 0 0 0 2.5rem;
+    }
+
+    /* row 2: page links spread across full width */
+    .nav {
+        order: 1;
+        width: 100vw;
+        border-radius: 0 0 2rem 2rem;
+        padding: 0.8rem 0 0.5rem 0;
+    }
+
+    nav a {
+        font-size: 1.3rem;
+    }
+
+    .user-container-nav-bar {
+        margin-right: 0.5rem;
+        transform: none;
+    }
+
+    .user-container-nav-bar>img {
+        transform: none;
+    }
+
+    .user-menu {
+        right: 0.5rem;
+        margin-left: 0;
+        max-width: calc(100vw - 3rem);
+    }
+}
+
+@media (max-width: 480px) {
+    nav a {
+        font-size: 1.1rem;
+    }
+
+    .logo-nav-bar a {
+        font-size: 1.3rem;
+    }
+
+    /* hide the welcome text, keep the avatar tappable */
+    .user-container-nav-bar>div {
+        display: none;
+    }
+
+    .user-container-nav-bar {
+        border-radius: 50%;
+        padding-left: 0;
+        background-color: transparent;
+    }
+
+    .login-nav-bar>div>a {
+        padding: 0.4rem 1rem;
+        font-size: 1.2rem;
+        white-space: nowrap;
+    }
+}

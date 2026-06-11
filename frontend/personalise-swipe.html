@@ -18,17 +18,17 @@
 
 
     <!-- Linking CSS Files -->
-    <link rel="stylesheet" href="stylesheets/index.css">
-    <link rel="stylesheet" href="stylesheets/nav-bar.css">
-    <link rel="stylesheet" href="stylesheets/footer.css">
-    <link rel="stylesheet" href="stylesheets/personaliseswipe.css">
+    <link rel="stylesheet" href="/stylesheets/index.css">
+    <link rel="stylesheet" href="/stylesheets/nav-bar.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/personaliseswipe.css">
 
     <!-- Linking Java Script Files -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="javascripts/nav-bar.js" defer></script>
-    <script src="javascripts/personaliseswipe.js" defer></script>
-    <script src="javascripts/index.js" defer></script>
+    <script src="/javascripts/nav-bar.js" defer></script>
+    <script src="/javascripts/personaliseswipe.js" defer></script>
+    <script src="/javascripts/index.js" defer></script>
 
     <title>Personalise</title>
 </head>
@@ -126,7 +126,7 @@
                 <img v-show="false" :src="preloadBackdrop" />
                 <div class="middle-box-bg box"></div>
                 <div class="middle-box box">
-                    <img :src="movie.backdrop_path ? `https://image.tmdb.org/t/p/original${movie.poster_path}` : '/images/unavailable-poster.svg'"
+                    <img :src="movie.poster_path ? `https://image.tmdb.org/t/p/original${movie.poster_path}` : '/images/unavailable-poster.svg'"
                         :alt="movie.title" />
                 </div>
             </div>
@@ -141,7 +141,7 @@
 
                     <div class="stream-info">
                         <div class="watch-trailer">
-                            <button type="button" href="" @click="openTrailer" :disabled="!movie.trailer" :class="{ 'disabled': !movie.trailer }">Watch trailer</button>
+                            <button type="button" @click="openTrailer" :disabled="!movie.trailer" :class="{ 'disabled': !movie.trailer }">Watch trailer</button>
 
                             <div class="icon-bar">
                                 <img :src="isSaved ? '/images/saved.svg' : '/images/not-saved.svg'"

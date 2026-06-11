@@ -7,7 +7,7 @@
     <title>Error <%= status || 500 %></title>
 
     <!-- Linking External Files -->
-    <link rel="icon" type="image/svg+xml" href="./images/favicon.png" >
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.png" >
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,21 +57,21 @@
 
                 <div v-show="showMenu" class="user-menu">
                     <div @click="redirect('/settings')">
-                        <img :src="isDark ? './images/dark-mode-sett-icon.png' : './images/light-mode-sett-icon.png'"
-                            src="./images/dark-mode-sett-icon.png" alt="settings icon">
+                        <img :src="isDark ? '/images/dark-mode-sett-icon.png' : '/images/light-mode-sett-icon.png'"
+                            src="/images/dark-mode-sett-icon.png" alt="settings icon">
                         Account Settings
                     </div>
                     <div v-if="isAdmin" @click="redirect('/admin-dashboard')">
-                        <img src="./images/admin-lock-icon.png" alt="admin icon">
+                        <img src="/images/admin-lock-icon.png" alt="admin icon">
                         Admin Dashboard
                     </div>
                     <div @click="changeDark()">
-                        <img :src="isDark ? 'images/dark-on-icon.png' : 'images/dark-off-icon.png'"
-                            src="./images/dark-on-icon.png" alt="theme off icon">
+                        <img :src="isDark ? '/images/dark-on-icon.png' : '/images/dark-off-icon.png'"
+                            src="/images/dark-on-icon.png" alt="theme off icon">
                         <span class="theme">Dark Theme</span>
                     </div>
                     <div @click="redirect('/logout')">
-                        <img src="images/logout-icon.png" alt="logout icon">
+                        <img src="/images/logout-icon.png" alt="logout icon">
                         <span class="logout-nav-bar">Log out</span>
                     </div>
                 </div>

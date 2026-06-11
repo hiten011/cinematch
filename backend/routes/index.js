@@ -27,11 +27,7 @@ router.get('/personalise', isAuthenticated, async function (req, res, next) {
             [userId]
         );
 
-        if (!rows[0].user_vector) {
-            isUserVector = false;
-        } else {
-            isUserVector = true;
-        }
+        isUserVector = Boolean(rows[0] && rows[0].user_vector);
     } catch (err) {
         isUserVector = false;
     }

@@ -175,8 +175,8 @@ createApp({
             return this.user.firstName + " " + this.user.lastName;
         },
 
+        // True when the new/confirm password fields match (or either is empty)
         checkMatch() {
-            // only check if both pass fields have content
             if (!this.newPass || !this.confirmPass) {
                 return true;
             }
@@ -194,7 +194,7 @@ createApp({
                 return;
             }
             try {
-                await axios.put("api/users/me", {
+                await axios.put("/api/users/me", {
                     first_name: this.nameChangeRequest.firstName,
                     last_name: this.nameChangeRequest.lastName,
                     password: this.nameChangeRequest.password
@@ -219,7 +219,7 @@ createApp({
                 return;
             }
             try {
-                const res = await axios.post("api/auth/change-password", {
+                const res = await axios.post("/api/auth/change-password", {
                     current_password: this.curPass,
                     new_password: this.newPass
                 });
@@ -243,7 +243,7 @@ createApp({
                 return;
             }
             try {
-                await axios.delete("api/users/me", {
+                await axios.delete("/api/users/me", {
                     data: {
                         password: this.deleteRequest.password
                     }
@@ -301,15 +301,6 @@ createApp({
                 special: /[!_@#$%^&*(),?":{}|<>]/.test(password),
                 noSpaces: !/\s/.test(password) && !password.includes('.') && password.length > 0
             };
-        },
-
-        // Check if new password and confirm password fields match
-        checkMatch() {
-            // only check if both pass fields have content
-            if (!this.newPass || !this.confirmPass) {
-                return true;
-            }
-            this.passMatch = this.newPass === this.confirmPass;
         },
 
         // Returns true if all password requirements are met
@@ -379,7 +370,7 @@ createApp({
                 const formData = new FormData();
                 formData.append('profile_picture', blob, 'avatar.png');
 
-                const response = await axios.post('api/users/me/profile-picture', formData, {
+                const response = await axios.post('/api/users/me/profile-picture', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -451,7 +442,7 @@ createApp({
 
         redirect(path) {
             if (path === "/logout") {
-                helperLogout('api/auth/logout');
+                helperLogout('/api/auth/logout');
                 window.location.href = '/home';
             } else {
                 window.location.href = path;
@@ -460,7 +451,7 @@ createApp({
 
         async uploadAvatar(i) {
             try {
-                await axios.post("api/users/me/profile-avatar", {
+                await axios.post("/api/users/me/profile-avatar", {
                     id: i
                 });
             } catch (error) {
@@ -474,7 +465,7 @@ createApp({
 
             try {
                 // Fetch user preferences (favorite genres and preferred languages)
-                const preferences = await getMethod("api/users/languages-genres");
+                const preferences = await getMethod("/api/users/languages-genres");
 
                 const favoriteGenres = Array.isArray(preferences.favorite_genres)
                     ? preferences.favorite_genres
@@ -544,7 +535,7 @@ createApp({
         // Fetch and populate user details
         async getUserDetails() {
             try {
-                const data = await getMethod("api/users/me");
+                const data = await getMethod("/api/users/me");
 
                 if (!data) {
                     throw new Error("User details not received");
@@ -558,10 +549,10 @@ createApp({
                 this.selectedTheme = (data.theme || "dark").toLowerCase();
                 this.isAdmin = data.role === 'admin';
 
-                // count for admin
+                // count for admin (fetch all admins, not just the first page)
                 if (this.isAdmin) {
-                    const adminUsers = await getMethod("api/admin/users");
-                    this.countAdmin = adminUsers.users.filter(user => user.role === 'admin').length;
+                    const adminUsers = await getMethod("/api/admin/users?role=admin&limit=1000");
+                    this.countAdmin = (adminUsers.users || []).length;
                 }
 
                 // console.log("[INFO] User details loaded successfully");
@@ -599,9 +590,10 @@ createApp({
     watch: {
         newPass(newVal) {
             this.validatePass(newVal);
+            this.passMatch = this.checkMatch;
         },
         confirmPass() {
-            this.checkMatch();
+            this.passMatch = this.checkMatch;
         },
         selectedTheme(newTheme) {
             localStorage.setItem('theme', newTheme);

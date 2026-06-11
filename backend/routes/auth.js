@@ -105,7 +105,8 @@ router.post('/change-password', isAuthenticated, validateChangePassword, validat
 
 // logout route
 router.post('/logout', (req, res) => {
-    req.session.destroy(() => {
+    req.session.destroy((err) => {
+        if (err) console.error('Session destruction failed:', err);
         // clear session cookie
         res.clearCookie('sessionId');
         return res.json({ msg: 'Logged out' });

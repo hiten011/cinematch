@@ -15,7 +15,7 @@ async function helperCheckLoginStatus() {
     // checkif the user has login
     try {
         // eslint-disable-next-line no-undef
-        const res = await axios.get('api/auth/status');
+        const res = await axios.get('/api/auth/status');
         return true;
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -54,7 +54,7 @@ createApp({
             this.isLogin = await helperCheckLoginStatus();
 
             if (this.isLogin) {
-                const { data } = await axios.get('api/users/me');
+                const { data } = await axios.get('/api/users/me');
                 this.isDark = data.theme==='dark';
                 this.isAdmin = data.role === 'admin';
                 helperChangeDark(this.isDark);
@@ -77,12 +77,9 @@ createApp({
             this.isDark = !this.isDark;
             document.cookie = `theme=${this.isDark ? 'dark' : 'light'}; path=/; max-age=31536000`;
 
-            // updating users preference for theme
-            if (this.isDark) {
-                const res = axios.post('api/users/me/theme',{ theme: "dark" });
-            } else {
-                const res = axios.post('api/users/me/theme',{ theme: "light" });
-            }
+            // updating users preference for theme (only persists when logged in)
+            axios.post('/api/users/me/theme', { theme: this.isDark ? 'dark' : 'light' })
+                .catch(() => { /* guests have no saved theme; cookie still applies */ });
 
             // adding transition between theme change
             document.body.classList.add('theme-transition');
@@ -90,9 +87,9 @@ createApp({
             setTimeout(() => { document.body.classList.remove('theme-transition'); }, 700);
 
         },
-        redirect(path) {
+        async redirect(path) {
             if (path === "/logout") {
-                helperLogout('api/auth/logout');
+                await helperLogout('/api/auth/logout');
                 window.location.href = '/home';
             } else {
                 window.location.href = path;

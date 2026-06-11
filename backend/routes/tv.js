@@ -3,24 +3,26 @@ const { tmdb, getImdbData } = require('../services/tmdb');
 const { validate, validateSearchQuery, validateId } = require('../services/validators');
 const { insertMovie, getMovieData, getGenreData } = require('../services/helpers');
 const { preferredProviders, preferredCountries } = require('../services/constants');
+const { cached } = require('../services/cache');
 
 const router = express.Router();
 
-// GET /api/tv/trending
-router.get('/trending', async (req, res) => {
-    try {
-        // get trending tv shows
-        const response = await tmdb.get('trending/tv/day');
-        const { results } = response.data;
-
-        // trim data to return only necessary fields
-        const trimmedResults = results.map((tvshow) => ({
+// fetch a TMDB tv list (cached) trimmed to only needed fields
+async function getTvList(path) {
+    return cached(`tv:${path}`, async () => {
+        const response = await tmdb.get(path);
+        return response.data.results.map((tvshow) => ({
             id: tvshow.id,
             title: tvshow.name,
             poster_path: tvshow.poster_path
         }));
+    });
+}
 
-        res.status(200).json(trimmedResults);
+// GET /api/tv/trending
+router.get('/trending', async (req, res) => {
+    try {
+        res.status(200).json(await getTvList('/trending/tv/day'));
     } catch (error) {
         console.error('TMDB error:', error.message);
         res.status(500).json({ msg: 'Failed to fetch trending tv shows' });
@@ -30,18 +32,7 @@ router.get('/trending', async (req, res) => {
 // GET /api/tv/top-rated
 router.get('/top-rated', async (req, res) => {
     try {
-        // get top rated tv shows
-        const response = await tmdb.get('/tv/top_rated');
-        const { results } = response.data;
-
-        // trim data to return only necessary fields
-        const trimmedResults = results.map((tvshow) => ({
-            id: tvshow.id,
-            title: tvshow.name,
-            poster_path: tvshow.poster_path
-        }));
-
-        res.status(200).json(trimmedResults);
+        res.status(200).json(await getTvList('/tv/top_rated'));
     } catch (error) {
         console.error('TMDB error:', error.message);
         res.status(500).json({ msg: 'Failed to fetch top rated tv shows' });
@@ -51,18 +42,7 @@ router.get('/top-rated', async (req, res) => {
 // GET /api/tv/now-airing
 router.get('/now-airing', async (req, res) => {
     try {
-        // get tv shows currently on air
-        const response = await tmdb.get('/tv/on_the_air');
-        const { results } = response.data;
-
-        // trim data to return only necessary fields
-        const trimmedResults = results.map((tvshow) => ({
-            id: tvshow.id,
-            title: tvshow.name,
-            poster_path: tvshow.poster_path
-        }));
-
-        res.status(200).json(trimmedResults);
+        res.status(200).json(await getTvList('/tv/on_the_air'));
     } catch (error) {
         console.error('TMDB error:', error.message);
         res.status(500).json({ msg: 'Failed to fetch now airing tv shows' });

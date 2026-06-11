@@ -1,71 +1,49 @@
 /* eslint-disable max-len */
 const express = require('express');
 const { tmdb, getImdbData } = require('../services/tmdb');
-const { validate, validateSearchQuery, validateId } = require('../services/validators');
+const { validate, validateSearchQuery, validateId, isAuthenticated } = require('../services/validators');
 const { insertMovie, getMovieData, getGenreData, getUserRating, getWatchStatus, getLangData } = require('../services/helpers');
 const { preferredProviders, preferredCountries } = require('../services/constants');
+const { cached } = require('../services/cache');
 
 const router = express.Router();
 
-// GET /api/movies/trending
-router.get('/trending', async (req, res) => {
-    try {
-        const response = await tmdb.get('/movie/popular');
-        const { results } = response.data;
-
-        // trim each movie object to only needed fields
-        const trimmedResults = results.map((movie) => ({
+// fetch a TMDB movie list (cached) trimmed to only needed fields
+async function getMovieList(path) {
+    return cached(`movies:${path}`, async () => {
+        const response = await tmdb.get(path);
+        return response.data.results.map((movie) => ({
             id: movie.id,
             title: movie.title,
             poster_path: movie.poster_path
         }));
+    });
+}
 
-        res.status(200).json(trimmedResults);
-
+// GET /api/movies/trending
+router.get('/trending', async (req, res) => {
+    try {
+        res.status(200).json(await getMovieList('/movie/popular'));
     } catch (error) {
         console.error('TMDB error:', error.message);
         res.status(500).json({ msg: 'Failed to fetch trending movies' });
     }
 });
 
-// GET /api/movies/top_rated
+// GET /api/movies/top-rated
 router.get('/top-rated', async (req, res) => {
     try {
-        // get top rated movies
-        const response = await tmdb.get('/movie/top_rated');
-        const { results } = response.data;
-
-        // trim each movie object to only needed fields
-        const trimmedResults = results.map((movie) => ({
-            id: movie.id,
-            title: movie.title,
-            poster_path: movie.poster_path
-        }));
-
-        res.status(200).json(trimmedResults);
-
+        res.status(200).json(await getMovieList('/movie/top_rated'));
     } catch (error) {
         console.error('TMDB error:', error.message);
         res.status(500).json({ msg: 'Failed to fetch top rated movies' });
     }
 });
 
-// GET /api/movies/now_playing
+// GET /api/movies/now-playing
 router.get('/now-playing', async (req, res) => {
     try {
-        // get movies now playing in cinemas
-        const response = await tmdb.get('/movie/now_playing');
-        const { results } = response.data;
-
-        // trim each movie object to only needed fields
-        const trimmedResults = results.map((movie) => ({
-            id: movie.id,
-            title: movie.title,
-            poster_path: movie.poster_path
-        }));
-
-        res.status(200).json(trimmedResults);
-
+        res.status(200).json(await getMovieList('/movie/now_playing'));
     } catch (error) {
         console.error('TMDB error:', error.message);
         res.status(500).json({ msg: 'Failed to fetch now playing movies' });
@@ -160,8 +138,11 @@ router.get('/movie/:id', validateId('id'), validate, async (req, res) => {
 
         res.status(200).json(result); // respond immediately
 
-        // insert movie details into db (after sending response to avoid delay)
-        insertMovie(result);
+        // insert movie details into db (after sending response to avoid delay);
+        // catch errors so a failed cache insert can't crash the process
+        insertMovie(result).catch((err) => {
+            console.error('Failed to cache movie in db:', err.message);
+        });
 
     } catch (error) {
         console.error('TMDB error:', error?.message || error);
@@ -170,7 +151,7 @@ router.get('/movie/:id', validateId('id'), validate, async (req, res) => {
 });
 
 // get user-specific movie data (rating, status)
-router.get('/user-preferences/:id', validateId('id'), validate, async (req, res) => {
+router.get('/user-preferences/:id', isAuthenticated, validateId('id'), validate, async (req, res) => {
     try {
         const movieId = req.params.id;
         var result = {};

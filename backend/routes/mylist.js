@@ -120,11 +120,13 @@ router.get('/', validateMyListQuery, validate, async (req, res) => {
             FROM MOVIELIST
             WHERE user_id = ? ${filterClause}
         `;
-        const [countRows] = await db.query(countQuery, values);
-        const total = countRows[0]?.total || 0;
 
-        // return final data
-        const [rows] = await db.query(finalQuery, finalValues);
+        // run count and data queries in parallel
+        const [[countRows], [rows]] = await Promise.all([
+            db.query(countQuery, values),
+            db.query(finalQuery, finalValues)
+        ]);
+        const total = countRows[0]?.total || 0;
         const formatted = formatMovies(rows);
         return res.status(200).json({
             total,

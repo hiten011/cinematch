@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 const logger = require('morgan');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
@@ -43,6 +44,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
+app.use(compression()); // gzip responses
 app.use(logger('dev'));
 app.use(express.json());
 app.use(xss());
@@ -71,8 +73,10 @@ app.use(async (req, res, next) => {
     next();
 });
 
+// images rarely change — let browsers cache them for a week
+app.use('/images', express.static(path.join(__dirname, '../frontend/images'), { maxAge: '7d' }));
 app.use(express.static(path.join(__dirname, '../frontend'), { index: false })); // use /frontend directory as default directory for static files.
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { maxAge: '7d' }));
 
 // update sessions
 app.use(async (req, res, next) => {

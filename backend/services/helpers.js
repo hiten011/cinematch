@@ -41,15 +41,15 @@ async function insertMovie(movieData) {
                 ]
             );
 
-            // add corresponding genres to MOVIEGENRES table
-            for (const genre of movieData.genres || []) {
-                db.query("INSERT INTO MOVIEGENRES (movie_id,genre_id) VALUES (?, ?)", [movieData.id, genre.id]);
-            }
-
-            // add corresponding watch providers to MOVIEPROVIDERS table
-            for (const provider of movieData.watch_providers || []) {
-                db.query("INSERT INTO MOVIEPROVIDERS (movie_id, provider_id) VALUES (?, ?)", [movieData.id, provider.provider_id]);
-            }
+            // add corresponding genres and watch providers to junction tables.
+            // INSERT IGNORE skips genres/providers not present in the lookup tables
+            // instead of failing the whole insert on a foreign key error.
+            await Promise.all([
+                ...(movieData.genres || []).map((genre) =>
+                    db.query("INSERT IGNORE INTO MOVIEGENRES (movie_id,genre_id) VALUES (?, ?)", [movieData.id, genre.id])),
+                ...(movieData.watch_providers || []).map((provider) =>
+                    db.query("INSERT IGNORE INTO MOVIEPROVIDERS (movie_id, provider_id) VALUES (?, ?)", [movieData.id, provider.provider_id]))
+            ]);
         }
     } catch (err) {
         console.error('Error inserting movie:', err.message);
@@ -339,6 +339,20 @@ async function getRandomMovie() {
     }
 }
 
+// fetch n distinct random movie ids in a single query
+async function getRandomMovies(n) {
+    try {
+        const [rows] = await db.query('SELECT id FROM MOVIES ORDER BY RAND() LIMIT ?', [n]);
+        if (rows.length === 0) {
+            return [238]; // fallback if no movies found - GODFATHER :)
+        }
+        return rows.map((row) => row.id);
+    } catch (err) {
+        console.error('Error in getRandomMovies:', err);
+        return [238];
+    }
+}
+
 
 /**
  * Filters out movieIds that already exist in USERPREFERENCES for this user,
@@ -388,6 +402,7 @@ module.exports = {
     getUserGenresLanguages,
     getUserRating,
     getRandomMovie,
+    getRandomMovies,
     getWatchStatus,
     filterMovieIds
 };

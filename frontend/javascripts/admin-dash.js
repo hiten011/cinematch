@@ -339,10 +339,9 @@ createApp({
         },
 
         // logout user for being inactive over 3 mins
-        logoutUser() {
-            helperLogout('api/auth/logout');
+        async logoutUser() {
+            await helperLogout('/api/auth/logout');
             window.location.href = '/home';
-            alert('You were logged out due to inactivity.');
         },
 
         // reset the timer
@@ -355,7 +354,7 @@ createApp({
         helperProfilePicture(profile_picture_url) {
 
             if (profile_picture_url.includes('avatar')) {
-                const fileName = profile_picture_url.replace("/upload/", "").replace(".svg", "");
+                const fileName = profile_picture_url.replace("/uploads/", "").replace(".svg", "");
 
                 // Step 2: Extract number using regex
                 const match = fileName.match(/\d+/); // \d+ = one or more digits
@@ -367,7 +366,7 @@ createApp({
             }
         },
         async getStats() {
-            const stats = await getMethod('api/admin/stats');
+            const stats = await getMethod('/api/admin/stats');
 
             this.totalUsers = stats.total_users;
             this.totalActive = stats.total_active;
@@ -445,7 +444,7 @@ createApp({
                 this.filter.roles.splice(idx, 1);
             }
 
-            showFilters = false;
+            this.showFilters = false;
         },
     },
     computed: {

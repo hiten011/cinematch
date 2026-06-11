@@ -379,5 +379,6 @@ module.exports = [
     getDecadesIndex,
     getImdbRatingIndex,
     getUserRatingIndex,
-    getWatchProvidersIndex
+    getWatchProvidersIndex,
+    initializePromise // consumers await this before using the mappings
 ];

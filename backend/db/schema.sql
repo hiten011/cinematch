@@ -161,7 +161,9 @@ CREATE TABLE `USERPREFERENCES` (
     CONSTRAINT `USERPREFERENCES_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`) ON DELETE CASCADE,
     CONSTRAINT `USERPREFERENCES_ibfk_2` FOREIGN KEY (`preference_id`) REFERENCES `PREFERENCES` (`id`) ON DELETE CASCADE,
     CONSTRAINT `USERPREFERENCES_ibfk_3` FOREIGN KEY (`movie_id`) REFERENCES `MOVIES` (`id`) ON DELETE CASCADE,
-    CONSTRAINT `USERPREFERENCES_ibfk_4` FOREIGN KEY (`user_rating_id`) REFERENCES `USERRATINGS` (`id`) ON DELETE CASCADE
+    CONSTRAINT `USERPREFERENCES_ibfk_4` FOREIGN KEY (`user_rating_id`) REFERENCES `USERRATINGS` (`id`) ON DELETE CASCADE,
+    KEY `idx_userpreferences_user_movie` (`user_id`, `movie_id`),
+    KEY `idx_userpreferences_user_score` (`user_id`, `score`)
 );
 
 -- create sessions table for session store
@@ -175,6 +177,7 @@ CREATE TABLE `SESSIONS` (
   `last_seen` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
+  KEY `idx_sessions_last_seen` (`last_seen`),
   CONSTRAINT `SESSIONS_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`) ON DELETE CASCADE
 );
 

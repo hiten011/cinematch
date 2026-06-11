@@ -77,6 +77,16 @@ createApp({
         },
         scrollToTop() {
             window.scrollTo({top: 0,behavior: 'smooth'});
+        },
+        async init() {
+            this.isLoading = true;
+            // fetch all three lists in parallel
+            await Promise.all([
+                this.getTrending(),
+                this.getNowPlaying(),
+                this.getTopRated()
+            ]);
+            this.isLoading = false;
         }
     },
     watch: {
@@ -112,14 +122,6 @@ createApp({
             const si = this.mod(this.topRatedSi, len); const en = this.mod(si + 5, len);
             // eslint-disable-next-line max-len
             return si < en ? this.topRated.slice(si, en) : this.topRated.slice(si).concat(this.topRated.slice(0, en));
-        },
-
-        async init() {
-            this.isLoading = true;
-            await this.getTrending();
-            await this.getNowPlaying();
-            await this.getTopRated();
-            this.isLoading = false;
         }
     },
     mounted() {

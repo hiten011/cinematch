@@ -6,7 +6,7 @@
 const express = require('express');
 const { isAuthenticated } = require('../services/validators');
 const db = require('../services/db');
-const { addMoviePreference, getRandomMovie, filterMovieIds } = require('../services/helpers');
+const { addMoviePreference, getRandomMovies, filterMovieIds } = require('../services/helpers');
 const {
     createMovieVector,
     calculateScore,
@@ -61,8 +61,7 @@ router.get('/movies', async (req, res) => {
             let candidates;
             if (topMovie === -1) {
                 // No personalized seed—grab some randoms
-                const randomPromises = Array.from({ length: 10 }, () => getRandomMovie());
-                candidates = await Promise.all(randomPromises);
+                candidates = await getRandomMovies(10);
                 // console.log(`[DEBUG] Random candidates:`, candidates);
             } else {
                 // Use TMDB recommendations
@@ -98,23 +97,19 @@ router.post('/genres-name', async (req, res) => {
     }
 
     try {
-        // Fetch genre IDs from names
-        const genreIds = [];
-        for (const name of genreNames) {
-            const [rows] = await db.query('SELECT id FROM GENRES WHERE name = ?', [name]);
-            if (rows.length > 0) {
-                genreIds.push(rows[0].id);
-            } else {
-                console.warn(`[WARN] Genre '${name}' not found.`);
-            }
+        // Fetch all matching genre IDs in one query
+        let genreIds = [];
+        if (genreNames.length > 0) {
+            const [rows] = await db.query('SELECT id FROM GENRES WHERE name IN (?)', [genreNames]);
+            genreIds = rows.map((row) => row.id);
         }
 
         // Delete all existing user genres
         await db.query('DELETE FROM USERGENRES WHERE user_id = ?', [userId]);
 
-        // Insert new ones
-        for (const id of genreIds) {
-            await db.query('INSERT INTO USERGENRES (user_id, genre_id) VALUES (?, ?)', [userId, id]);
+        // Insert new ones in a single bulk insert
+        if (genreIds.length > 0) {
+            await db.query('INSERT INTO USERGENRES (user_id, genre_id) VALUES ?', [genreIds.map((id) => [userId, id])]);
         }
 
         res.status(200).json({ msg: "Genres updated successfully." });
@@ -133,24 +128,26 @@ router.post('/languages-code', async (req, res) => {
     }
 
     try {
-        const languageIds = [];
-        for (let code of languageCodes) {
-            let [rows] = await db.query('SELECT id FROM LANGUAGES WHERE code = ?', [code]);
+        // Fetch all matching language IDs in one query; unknown codes map to 'ot'
+        const languageIds = new Set();
+        if (languageCodes.length > 0) {
+            const [rows] = await db.query('SELECT id, code FROM LANGUAGES WHERE code IN (?)', [languageCodes]);
+            const foundCodes = new Set(rows.map((row) => row.code));
+            rows.forEach((row) => languageIds.add(row.id));
 
-            if (rows.length === 0) {
-                console.warn(`[WARN] Language code '${code}' not found. Assigning to 'ot'`);
-                [rows] = await db.query('SELECT id FROM LANGUAGES WHERE code = "ot"');
+            if (languageCodes.some((code) => !foundCodes.has(code))) {
+                console.warn(`[WARN] Some language codes not found. Assigning to 'ot'`);
+                const [[other]] = await db.query('SELECT id FROM LANGUAGES WHERE code = "ot"');
+                if (other) languageIds.add(other.id);
             }
-
-            if (rows.length > 0) languageIds.push(rows[0].id);
         }
 
         // Delete all existing user languages
         await db.query('DELETE FROM USERLANGUAGES WHERE user_id = ?', [userId]);
 
-        // Insert new ones
-        for (const id of languageIds) {
-            await db.query('INSERT INTO USERLANGUAGES (user_id, language_id) VALUES (?, ?)', [userId, id]);
+        // Insert new ones in a single bulk insert
+        if (languageIds.size > 0) {
+            await db.query('INSERT INTO USERLANGUAGES (user_id, language_id) VALUES ?', [[...languageIds].map((id) => [userId, id])]);
         }
 
         res.status(200).json({ msg: "Languages updated successfully." });
@@ -173,8 +170,8 @@ router.post('/genres-id', async (req, res) => {
     try {
         await db.query('DELETE FROM USERGENRES WHERE user_id = ?', [userId]);
 
-        for (const genreId of genreIds) {
-            await db.query('INSERT INTO USERGENRES (user_id, genre_id) VALUES (?, ?)', [userId, genreId]);
+        if (genreIds.length > 0) {
+            await db.query('INSERT IGNORE INTO USERGENRES (user_id, genre_id) VALUES ?', [genreIds.map((id) => [userId, id])]);
         }
 
         res.status(200).json({ msg: "Genres updated successfully." });
@@ -197,8 +194,8 @@ router.post('/languages-id', async (req, res) => {
     try {
         await db.query('DELETE FROM USERLANGUAGES WHERE user_id = ?', [userId]);
 
-        for (const languageId of languageIds) {
-            await db.query('INSERT INTO USERLANGUAGES (user_id, language_id) VALUES (?, ?)', [userId, languageId]);
+        if (languageIds.length > 0) {
+            await db.query('INSERT IGNORE INTO USERLANGUAGES (user_id, language_id) VALUES ?', [languageIds.map((id) => [userId, id])]);
         }
 
         res.status(200).json({ msg: "Languages updated successfully." });

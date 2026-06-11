@@ -38,21 +38,21 @@ const app = Vue.createApp({
 
             isSaved: false,
             isWatched: false,
-            hasProvider: true
+            isFetchingMore: false
         };
     },
     computed: {
+        hasProvider() {
+            return ((this.movie && this.movie.watch_providers) || []).length > 0;
+        },
+
         topProvider() {
             const providers = (this.movie && this.movie.watch_providers) || [];
 
-            if (providers.length === 0) {
-                this.hasProvider = false;
-                return [];
-            }
-
-            const sorted = providers.sort((i, j) => i.display_priority - j.display_priority);
-            this.hasProvider = true;
-            return sorted.slice(0, 2);
+            // copy before sorting so the computed has no side effects
+            return [...providers]
+                .sort((i, j) => i.display_priority - j.display_priority)
+                .slice(0, 2);
         },
 
         preloadBackdrop() {
@@ -173,13 +173,22 @@ const app = Vue.createApp({
             middleBox.classList.remove('next-fade-in'); // remove fade class
         },
         async appendMovie() {
+            if (this.isFetchingMore) return; // avoid duplicate concurrent fetches
+            this.isFetchingMore = true;
+            try {
+                await this.fetchMoreMovies();
+            } finally {
+                this.isFetchingMore = false;
+            }
+        },
+        async fetchMoreMovies() {
             this.loadError = false;
             this.errorMessage = '';
 
             // 1) Fetch the list of IDs
             let res;
             try {
-                res = await getMethod('api/personalise/movies');
+                res = await getMethod('/api/personalise/movies');
             } catch (err) {
                 console.error('Failed to fetch movie IDs:', err);
                 this.loadError = true;

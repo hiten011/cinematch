@@ -84,7 +84,7 @@ router.put('/me', validateUpdateUser, validate, async (req, res) => {
         res.json({ msg: 'User updated' });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ msg: `Failed to update user: ${err}` });
+        res.status(500).json({ msg: 'Failed to update user' });
     }
 });
 
@@ -105,7 +105,8 @@ router.delete('/me', validateDeleteUser, validate, async (req, res) => {
         await db.query(`DELETE FROM USERS WHERE id = ?`, [req.user.id]);
 
         // destroy session and clear cookie
-        req.session.destroy(() => {
+        req.session.destroy((destroyErr) => {
+            if (destroyErr) console.error('Session destruction failed:', destroyErr);
             res.clearCookie('sessionId');
             return res.status(200).json({ msg: 'User deleted and logged out' });
         });
