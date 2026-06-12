@@ -279,3 +279,85 @@ main {
     font-size: 1.2rem;
     color: var(--primary-color);
 }
+
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 768px) {
+    /* stack the fanned cards into a 2-column grid */
+    .cards-box {
+        display: grid;
+        grid-template-columns: repeat(2, var(--card-width));
+        justify-content: center;
+        gap: 3rem;
+        margin-bottom: 3rem;
+    }
+
+    .card {
+        position: relative;
+    }
+
+    .card:nth-child(1),
+    .card:nth-child(2),
+    .card:nth-child(3),
+    .card:nth-child(4) {
+        transform: none;
+    }
+
+    .card:nth-child(1):hover,
+    .card:nth-child(2):hover,
+    .card:nth-child(3):hover,
+    .card:nth-child(4):hover {
+        transform: none;
+    }
+
+    .card:nth-child(1).flipped,
+    .card:nth-child(2).flipped,
+    .card:nth-child(3).flipped,
+    .card:nth-child(4).flipped {
+        transform: rotateY(180deg);
+    }
+
+    .creator-img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .member-box {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0rem 2rem;
+        box-sizing: border-box;
+    }
+
+    .message-box {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 50rem;
+        margin-left: 0rem;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 1 column of bigger cards on phones */
+    .cards-box {
+        --card-width: 30rem;
+        --card-height: 40.5rem;
+        grid-template-columns: var(--card-width);
+    }
+
+    .curved-text {
+        font-size: 2rem;
+    }
+
+    .backside-content {
+        font-size: 1.8rem;
+    }
+
+    .cr-card-content {
+        padding: 1rem 1.5rem;
+    }
+}

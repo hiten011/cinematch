@@ -43,3 +43,35 @@
     white-space: pre-wrap;
     color: var(--text-color);
 }
+
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 768px) {
+    .error-container {
+        height: auto;
+        min-height: 70vh;
+        padding: 2rem;
+        box-sizing: border-box;
+    }
+
+    .error-container h1 {
+        font-size: 2.6rem;
+    }
+
+    .error-stack {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-container h1 {
+        font-size: 2.4rem;
+    }
+
+    .error-container h2 {
+        font-size: 1.6rem;
+    }
+}

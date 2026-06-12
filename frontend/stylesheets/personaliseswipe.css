@@ -559,3 +559,120 @@ main {
     font-style: italic;
     margin-top: -3rem;
 }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1024px) {
+    .action-buttons {
+        width: 40%;
+    }
+
+    .side-box>section {
+        padding: 0.75rem 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* stack: movie card first, info panels below, buttons row after */
+    main {
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 2rem;
+        padding: 2rem 1rem 0 1rem;
+    }
+
+    .box {
+        height: auto;
+        min-height: 0;
+    }
+
+    .middle-box-section {
+        order: -1;
+        width: 100%;
+    }
+
+    .middle-box,
+    .middle-box-bg {
+        height: 55vh;
+        min-height: 30rem;
+    }
+
+    .side-box {
+        width: 100%;
+    }
+
+    .side-box>section {
+        height: auto;
+        gap: 1.5rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .left-box {
+        border-width: 0.3rem;
+        border-radius: 2rem;
+        box-shadow: 0 0.5rem 1rem 0.2rem var(--shadow-color);
+    }
+
+    .right-box {
+        border-width: 0.3rem;
+        border-radius: 2rem;
+        box-shadow: 0 0.5rem 1rem 0.2rem var(--shadow-color);
+    }
+
+    .heading>span {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .description {
+        max-height: 16rem;
+        overflow-y: auto;
+    }
+
+    .watch-trailer,
+    .stream-button {
+        width: 45%;
+    }
+
+    /* like/dislike buttons in a centered row below the card */
+    .action-buttons {
+        width: 100%;
+        justify-content: center;
+        gap: 6rem;
+        margin: 2rem 0 3rem 0;
+        box-sizing: border-box;
+    }
+
+    .tickcross-button {
+        width: 8rem;
+        height: 8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .middle-box,
+    .middle-box-bg {
+        height: 48vh;
+        min-height: 26rem;
+    }
+
+    .stream-info {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .watch-trailer,
+    .stream-button {
+        width: 80%;
+    }
+
+    .action-buttons {
+        gap: 4rem;
+    }
+
+    .tickcross-button {
+        width: 9rem;
+        height: 9rem;
+    }
+}

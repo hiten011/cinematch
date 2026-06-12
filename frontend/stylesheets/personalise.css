@@ -215,3 +215,88 @@
     cursor: not-allowed;
     opacity: 0.5;
 }
+
+/* ---------- Responsive ---------- */
+/* .genre-grid .pill is used (not .pill) so these rules win over the
+   duplicate .pill base rule in personaliselang.css loaded after this file */
+
+@media (max-width: 1024px) {
+    .genreform-section {
+        box-sizing: border-box;
+    }
+
+    .buttonform-section {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    /* tablet: 3 columns */
+    .genre-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        margin: 2.5rem 2rem;
+    }
+
+    .genre-grid .pill {
+        padding: 0.9rem 0.5rem;
+        font-size: 1.3rem;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 768px) {
+    .personalise-main {
+        margin: 1rem 1.5rem 3rem 1.5rem;
+    }
+
+    .main-title {
+        font-size: 2.8rem;
+    }
+
+    .form-title {
+        font-size: 2.4rem;
+        letter-spacing: 0.3rem;
+    }
+
+    .genre-title {
+        font-size: 2.8rem;
+    }
+
+    .buttonform-section {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .genre-grid {
+        margin: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .personalise-main {
+        margin: 1rem 1rem 3rem 1rem;
+    }
+
+    .genreform-section {
+        padding: 1.5rem 1rem;
+    }
+
+    .buttonform-section {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+
+    /* phone: 2 columns */
+    .genre-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+        margin: 2rem 1rem;
+    }
+
+    .genre-grid .pill {
+        font-size: 1.2rem;
+        padding: 0.8rem 0.4rem;
+    }
+}

@@ -336,3 +336,152 @@ button:hover{
 }
 
 
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 1024px) {
+  main {
+    margin: 4rem 2rem 16rem 2rem;
+    padding: 0rem 1rem 0rem 1rem;
+  }
+
+  .banner {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* carousels: keep posters readable and scroll within the row */
+  .boxes {
+    box-sizing: border-box;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    padding: 0rem 1rem 0rem 1rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .boxes div {
+    flex: 0 0 auto;
+    width: 12rem;
+  }
+
+  .boxes img {
+    height: 18rem;
+  }
+
+  .boxes button {
+    flex: 0 0 auto;
+    width: 6rem;
+    height: 6rem;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .boxes button svg {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    margin: 3rem 1.5rem 14rem 1.5rem;
+    padding: 0rem;
+  }
+
+  .poster-personalise-page {
+    margin-top: 7rem;
+  }
+
+  .banner {
+    height: auto;
+    min-height: 18rem;
+  }
+
+  .start-button {
+    margin: -1rem 0rem 3rem 6rem;
+  }
+
+  .characters {
+    height: 100%;
+  }
+
+  .characters img {
+    height: 100%;
+  }
+
+  .heading-div {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0rem 2rem;
+    margin: 0rem 1rem 0rem 1rem;
+  }
+
+  main .heading1 {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    margin: 2rem 1rem 12rem 1rem;
+  }
+
+  .text-content {
+    margin-top: 1rem;
+    padding-right: 8rem;
+  }
+
+  .text-content h1 {
+    font-size: 2.8rem;
+    letter-spacing: 0.3rem;
+  }
+
+  .highlight-images img {
+    height: 4rem;
+  }
+
+  .start-button {
+    margin: 0rem 0rem 1rem 0rem;
+  }
+
+  .characters {
+    height: 80%;
+  }
+
+  main .heading1 {
+    font-size: 3.4rem;
+  }
+
+  main .heading2 {
+    font-size: 2.2rem;
+  }
+
+  .search-container {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  .search-results {
+    max-width: calc(100vw - 6rem);
+    box-sizing: border-box;
+  }
+
+  .boxes div {
+    width: 11rem;
+  }
+
+  .boxes img {
+    height: 16.5rem;
+  }
+
+  .boxes span {
+    font-size: 1.3rem;
+  }
+
+  .boxes button {
+    width: 7rem;
+    height: 7rem;
+  }
+}
+
+

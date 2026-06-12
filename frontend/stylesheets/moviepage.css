@@ -328,3 +328,140 @@ strong {
     transition: transform ;
     cursor: pointer;
 }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1024px) {
+    .container {
+        max-width: none;
+        margin: 5rem 2rem 0 2rem;
+    }
+
+    .second-row {
+        gap: 2rem;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .numeric-row {
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .third-row {
+        gap: 2rem;
+    }
+
+    .ratings {
+        gap: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 4.5rem 1rem 0 1rem;
+    }
+
+    .poster-section {
+        height: 26rem;
+    }
+
+    /* no hover on touch screens - keep the trailer button visible */
+    .play-button {
+        opacity: 1;
+    }
+
+    .info {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .first-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin-top: -2rem;
+        text-align: center;
+    }
+
+    .title {
+        max-width: 100%;
+        font-size: 3.6rem;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+    .stream-info {
+        margin-top: 0.5rem;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .second-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 0;
+    }
+
+    .numeric-row {
+        justify-content: center;
+        gap: 1.5rem;
+    }
+
+    .third-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .cast-info {
+        width: 100%;
+        margin-top: -1rem;
+        text-align: center;
+    }
+
+    .ratings {
+        justify-content: center;
+        gap: 3rem;
+    }
+
+    .description {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 4rem 0.5rem 0 0.5rem;
+    }
+
+    .poster-section {
+        height: 20rem;
+    }
+
+    .title {
+        font-size: 3rem;
+    }
+
+    /* full-title tooltip is hover-only - drop it on phones */
+    .title:hover::after {
+        display: none;
+    }
+
+    .numeric-row {
+        gap: 1rem;
+    }
+
+    .user-options-row {
+        gap: 2rem;
+    }
+
+    .online-ratings>p,
+    .user-ratings>p {
+        margin-top: 0;
+    }
+
+    .ratings {
+        gap: 2rem;
+    }
+}
