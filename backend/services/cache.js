@@ -31,4 +31,9 @@ async function cached(key, producer, ttlMs = DEFAULT_TTL_MS) {
     }
 }
 
-module.exports = { cached };
+/** Empties the cache (used by tests). */
+function clearCache() {
+    store.clear();
+}
+
+module.exports = { cached, clearCache };

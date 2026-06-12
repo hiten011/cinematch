@@ -45,7 +45,9 @@ app.set('view engine', 'ejs');
 
 
 app.use(compression()); // gzip responses
-app.use(logger('dev'));
+if (process.env.NODE_ENV !== 'test') {
+    app.use(logger('dev'));
+}
 app.use(express.json());
 app.use(xss());
 app.use(express.urlencoded({ extended: false }));
