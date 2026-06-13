@@ -130,7 +130,7 @@
 
                     <!-- Selected Chips -->
                     <div class="chip-list" id="chip-list">
-                        <div v-for="language in selectedLanguages" :key="code" class="chip">
+                        <div v-for="language in selectedLanguages" :key="language.code" class="chip">
                             {{ language.name }}
                             <span class="remove" @click="removeLanguage(language.code)">&times;</span>
                         </div>

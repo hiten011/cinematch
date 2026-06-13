@@ -115,7 +115,6 @@ dist
 # Database dump
 backend/db/dump.sql
 
-# Profile picture uploads
-backend/uploads/*.png
-backend/uploads/*.jpg
-backend/uploads/*.jpeg
+# Profile picture uploads (keep the bundled avatar svgs)
+backend/uploads/*
+!backend/uploads/avatar*.svg

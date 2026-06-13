@@ -132,7 +132,7 @@ CREATE TABLE `USERSETTINGS` (
     `user_id` int NOT NULL,
     `theme` enum('dark','light') NOT NULL DEFAULT 'dark',
     `user_vector` json DEFAULT NULL,
-    KEY `user_id` (`user_id`),
+    PRIMARY KEY (`user_id`),
     CONSTRAINT `USERSETTINGS_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`) ON DELETE CASCADE
 );
 

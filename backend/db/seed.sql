@@ -6,7 +6,11 @@ INSERT INTO `USERS` VALUES
 (2,'joe','$2b$10$7xXplZAn8Pjx0j2mZShsq.zI6EyMPGASlD155G8S7bkn8WD6swBg.','joe','byjo','2025-05-10 07:37:00','admin','/uploads/avatar3.svg','2025-04-24'),
 (3,'hiten','$2b$10$2dXbB7oxHfH3U/8qgS3kFO2fQOuWJtq3pALB8X2Z8CBLU1lMgyr4O','hiten','gupta',NULL,'user','/uploads/avatar3.svg','2025-04-24'),
 (4,'josheen','$2b$10$dhlcs0pHzf7ioqqhJZ.dkeQJ1hc5TXiBYHwHbca9uqGanQMk9h87i','josheen','kour',NULL,'user','/uploads/avatar3.svg','2025-04-24'),
-(5,'test2','$2b$10$z4nylN4a1.FI5o5TjdCTIusLFI3Q1WYsv0JbZBi9sXLSorgEt85RC','josheen','kour','2025-05-10 06:40:52','user','/uploads/avatar3.svg','2025-04-26');
+(5,'test2','$2b$10$z4nylN4a1.FI5o5TjdCTIusLFI3Q1WYsv0JbZBi9sXLSorgEt85RC','josheen','kour','2025-05-10 06:40:52','user','/uploads/avatar3.svg','2025-04-26'),
+(6,'seeduser6','$2b$10$s7YXS2rq2qbxNLSAbBVLteyJDNYcX0TFgKbTM6/sHfKLF7httIzrO','Seed','User6',NULL,'user','/uploads/avatar3.svg','2025-04-26'),
+(7,'seeduser7','$2b$10$s7YXS2rq2qbxNLSAbBVLteyJDNYcX0TFgKbTM6/sHfKLF7httIzrO','Seed','User7',NULL,'user','/uploads/avatar3.svg','2025-04-26'),
+(8,'seeduser8','$2b$10$s7YXS2rq2qbxNLSAbBVLteyJDNYcX0TFgKbTM6/sHfKLF7httIzrO','Seed','User8',NULL,'user','/uploads/avatar3.svg','2025-04-26'),
+(9,'seeduser9','$2b$10$s7YXS2rq2qbxNLSAbBVLteyJDNYcX0TFgKbTM6/sHfKLF7httIzrO','Seed','User9',NULL,'user','/uploads/avatar3.svg','2025-04-26');
 
 
 INSERT INTO `USERSETTINGS` VALUES
@@ -14,7 +18,11 @@ INSERT INTO `USERSETTINGS` VALUES
 (2,'dark',NULL),
 (3,'dark',NULL),
 (4,'dark',NULL),
-(5,'dark',NULL);
+(5,'dark',NULL),
+(6,'dark',NULL),
+(7,'dark',NULL),
+(8,'dark',NULL),
+(9,'dark',NULL);
 
 
 INSERT IGNORE INTO MOVIES VALUES
@@ -2872,7 +2880,7 @@ INSERT IGNORE INTO USERPREFERENCES VALUES
 (6,5,696506,NULL,0.5568854398101786,'2025-06-11 07:58:50'),
 (6,7,1160956,NULL,0.482256586184323,'2025-06-11 07:58:53'),
 (6,1,461191,NULL,-1,'2025-06-11 07:58:54'),
-(6,5,668489,39,-1,'2025-06-11 07:58:57'),
+(6,5,668489,NULL,-1,'2025-06-11 07:58:57'),
 (6,7,1293286,NULL,0.6715329791722058,'2025-06-11 08:01:07'),
 (2,1,1186350,NULL,-1,'2025-06-11 11:45:57'),
 (2,1,881099,NULL,-1,'2025-06-11 11:45:59'),
